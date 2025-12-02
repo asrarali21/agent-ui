@@ -18,11 +18,16 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className={cn(
-                "flex w-full gap-4 p-4 md:p-6",
-                isUser ? "bg-transparent" : "bg-muted/50"
+                "flex w-full gap-4 p-4 md:p-6 rounded-xl",
+                isUser
+                    ? "bg-primary/10 border border-primary/20"
+                    : "bg-white/5 backdrop-blur-sm border border-white/10"
             )}
         >
-            <div className="flex size-8 shrink-0 select-none items-center justify-center rounded-md border bg-background shadow">
+            <div className={cn(
+                "flex size-8 shrink-0 select-none items-center justify-center rounded-lg shadow-sm",
+                isUser ? "bg-primary text-primary-foreground" : "bg-black/40 border border-white/10 text-white"
+            )}>
                 {isUser ? (
                     <User className="size-4" />
                 ) : (
@@ -30,7 +35,7 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
                 )}
             </div>
             <div className="flex-1 space-y-2 overflow-hidden">
-                <div className="prose prose-invert max-w-none leading-7 text-foreground prose-p:leading-7 prose-pre:bg-muted prose-pre:border prose-pre:border-border">
+                <div className="prose prose-invert max-w-none leading-7 text-white/90 prose-p:leading-7 prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/10 prose-code:text-primary prose-code:bg-primary/10 prose-code:px-1 prose-code:rounded">
                     <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{

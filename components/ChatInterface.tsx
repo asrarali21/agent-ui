@@ -4,6 +4,7 @@ import { ChatInput } from "./ChatInput";
 import { ChatMessage } from "./ChatMessage";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github } from "lucide-react";
+import { Background } from "./Background";
 
 interface Message {
     role: "user" | "assistant";
@@ -65,29 +66,41 @@ export function ChatInterface() {
     };
 
     return (
-        <div className="flex flex-col h-screen bg-background text-foreground">
+        <div className="relative flex flex-col h-screen text-foreground overflow-hidden">
+            <Background />
+
             {/* Header */}
-            <header className="sticky top-0 z-10 flex items-center gap-3 border-b bg-background/80 px-6 py-4 backdrop-blur-sm">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-white/10 bg-background/20 px-6 py-4 backdrop-blur-md">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-primary/20 text-primary shadow-[0_0_15px_rgba(168,85,247,0.5)]">
                     <Github className="size-5" />
                 </div>
-                <h1 className="text-lg font-semibold tracking-tight">GitHub Agent</h1>
+                <h1 className="text-lg font-semibold tracking-tight text-white">GitHub Agent</h1>
             </header>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-4 md:p-6">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 scroll-smooth">
                 <div className="mx-auto max-w-3xl space-y-6">
                     {messages.length === 0 ? (
                         <div className="flex h-full flex-col items-center justify-center space-y-4 py-20 text-center text-muted-foreground">
-                            <div className="rounded-full bg-muted/50 p-4">
-                                <Github className="size-12 opacity-50" />
-                            </div>
-                            <div className="space-y-2">
-                                <h2 className="text-2xl font-semibold text-foreground">
+                            <motion.div
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ duration: 0.5 }}
+                                className="rounded-full bg-white/5 p-6 backdrop-blur-sm ring-1 ring-white/10"
+                            >
+                                <Github className="size-16 opacity-80 text-primary" />
+                            </motion.div>
+                            <motion.div
+                                initial={{ y: 20, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                transition={{ delay: 0.2, duration: 0.5 }}
+                                className="space-y-2"
+                            >
+                                <h2 className="text-3xl font-bold text-white tracking-tight">
                                     How can I help you today?
                                 </h2>
-                                <p>Ask me anything about your repositories or code.</p>
-                            </div>
+                                <p className="text-lg text-white/60">Ask me anything about your repositories or code.</p>
+                            </motion.div>
                         </div>
                     ) : (
                         <AnimatePresence initial={false}>
@@ -105,15 +118,15 @@ export function ChatInterface() {
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="flex w-full gap-4 p-4 md:p-6 bg-muted/50"
+                            className="flex w-full gap-4 p-4 md:p-6 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10"
                         >
-                            <div className="flex size-8 shrink-0 items-center justify-center rounded-md border bg-background shadow">
-                                <Github className="size-4 animate-pulse" />
+                            <div className="flex size-8 shrink-0 items-center justify-center rounded-md border border-white/10 bg-black/20 shadow">
+                                <Github className="size-4 animate-pulse text-primary" />
                             </div>
                             <div className="flex items-center gap-1">
-                                <span className="size-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.3s]"></span>
-                                <span className="size-1.5 rounded-full bg-foreground/50 animate-bounce [animation-delay:-0.15s]"></span>
-                                <span className="size-1.5 rounded-full bg-foreground/50 animate-bounce"></span>
+                                <span className="size-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.3s]"></span>
+                                <span className="size-1.5 rounded-full bg-primary animate-bounce [animation-delay:-0.15s]"></span>
+                                <span className="size-1.5 rounded-full bg-primary animate-bounce"></span>
                             </div>
                         </motion.div>
                     )}
@@ -122,10 +135,10 @@ export function ChatInterface() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 md:p-6 bg-background">
+            <div className="p-4 md:p-6">
                 <div className="mx-auto max-w-3xl">
                     <ChatInput onSend={handleSend} disabled={isLoading} />
-                    <p className="mt-2 text-center text-xs text-muted-foreground">
+                    <p className="mt-2 text-center text-xs text-white/40">
                         AI can make mistakes. Please verify important information.
                     </p>
                 </div>

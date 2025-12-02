@@ -34,14 +34,14 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     }, [input]);
 
     return (
-        <div className="relative flex items-end gap-2 rounded-xl border bg-background p-2 shadow-sm focus-within:ring-1 focus-within:ring-ring">
+        <div className="relative flex items-end gap-2 rounded-xl border border-white/10 bg-white/5 p-2 shadow-lg backdrop-blur-md focus-within:ring-1 focus-within:ring-primary/50 transition-all duration-200">
             <textarea
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Ask anything..."
-                className="min-h-[44px] w-full resize-none bg-transparent px-3 py-2.5 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50 max-h-32"
+                className="min-h-[44px] w-full resize-none bg-transparent px-3 py-2.5 text-sm text-white outline-none placeholder:text-white/40 disabled:cursor-not-allowed disabled:opacity-50 max-h-32"
                 disabled={disabled}
                 rows={1}
             />
@@ -49,7 +49,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
                 size="icon"
                 onClick={handleSend}
                 disabled={!input.trim() || disabled}
-                className="shrink-0 rounded-lg"
+                className="shrink-0 rounded-lg bg-primary hover:bg-primary/90 text-white shadow-[0_0_10px_rgba(168,85,247,0.4)] transition-all hover:shadow-[0_0_15px_rgba(168,85,247,0.6)]"
             >
                 <SendHorizontal className="size-4" />
                 <span className="sr-only">Send</span>
